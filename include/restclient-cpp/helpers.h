@@ -49,17 +49,21 @@ namespace Helpers {
   size_t read_callback(void *ptr, size_t size, size_t nmemb,
                               void *userdata);
 
+  static inline int isspace(int c) {
+      return c == ' ';
+  }
+
   // trim from start
   static inline std::string &ltrim(std::string &s) {  // NOLINT
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-          std::not1(std::ptr_fun<int, int>(std::isspace))));
+          std::not1(std::ptr_fun<int, int>(isspace))));
     return s;
   }
 
   // trim from end
   static inline std::string &rtrim(std::string &s) { // NOLINT
     s.erase(std::find_if(s.rbegin(), s.rend(),
-          std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+          std::not1(std::ptr_fun<int, int>(isspace))).base(), s.end());
     return s;
   }
 

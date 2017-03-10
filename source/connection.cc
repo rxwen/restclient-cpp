@@ -29,7 +29,8 @@ RestClient::Connection::Connection(const std::string& baseUrl)
                                : lastRequest(), headerFields() {
   this->curlHandle = curl_easy_init();
   if (!this->curlHandle) {
-    throw std::runtime_error("Couldn't initialize curl handle");
+    //throw std::runtime_error("Couldn't initialize curl handle");
+    return;
   }
   this->baseUrl = baseUrl;
   this->timeout = 0;
@@ -241,6 +242,10 @@ RestClient::Connection::SetKeyPassword(const std::string& keyPassword) {
   this->keyPassword = keyPassword;
 }
 
+static inline int toupper(int c) {
+  return (c <= 'z' && c >= 'a') ? c + 32 : c;
+}
+
 /**
  * @brief set HTTP proxy address and port
  *
@@ -256,7 +261,7 @@ RestClient::Connection::SetProxy(const std::string& uriProxy) {
   std::string uriProxyUpper = uriProxy;
   // check if the provided address is prefixed with "http"
   std::transform(uriProxyUpper.begin(), uriProxyUpper.end(),
-    uriProxyUpper.begin(), ::toupper);
+    uriProxyUpper.begin(), toupper);
 
   if (uriProxyUpper.compare(0, 4, "HTTP") != 0) {
     this->uriProxy = "http://" + uriProxy;
