@@ -491,12 +491,15 @@ RestClient::Connection::put(const std::string& url,
  * @return response struct
  */
 RestClient::Response
-RestClient::Connection::del(const std::string& url) {
+RestClient::Connection::del(const std::string& url, const std::string& data) {
   /** we want HTTP DELETE */
   const char* http_delete = "DELETE";
 
   /** set HTTP DELETE METHOD */
   curl_easy_setopt(this->curlHandle, CURLOPT_CUSTOMREQUEST, http_delete);
+  /** set post fields */
+  curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDS, data.c_str());
+  curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDSIZE, data.size());
 
   return this->performCurlRequest(url);
 }

@@ -100,10 +100,11 @@ RestClient::Response RestClient::put(const std::string& url,
  *
  * @return response struct
  */
-RestClient::Response RestClient::del(const std::string& url) {
+RestClient::Response RestClient::del(const std::string& url,
+                                     const std::string& data) {
   RestClient::Response ret;
   RestClient::Connection *conn = new RestClient::Connection("");
-  ret = conn->del(url);
+  ret = conn->del(url, data);
   delete conn;
   return ret;
 }

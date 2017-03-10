@@ -57,7 +57,8 @@ Response post(const std::string& url,
 Response put(const std::string& url,
               const std::string& content_type,
               const std::string& data);
-Response del(const std::string& url);
+Response del(const std::string& url,
+              const std::string& data);
 Response head(const std::string& url);
 
 }  // namespace RestClient
