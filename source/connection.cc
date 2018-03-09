@@ -450,6 +450,27 @@ RestClient::Connection::post(const std::string& url,
   /** set post fields */
   curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDS, data.c_str());
   curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDSIZE, data.size());
+  curl_easy_setopt(this->curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_easy_setopt(this->curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
+
+  return this->performCurlRequest(url);
+}
+/**
+ * @brief HTTP PATCH method
+ *
+ * @param url to query
+ * @param data HTTP PATCH body
+ *
+ * @return response struct
+ */
+RestClient::Response
+RestClient::Connection::patch(const std::string& url,
+                             const std::string& data) {
+  /** Now specify we want to patch data */
+  curl_easy_setopt(this->curlHandle, CURLOPT_CUSTOMREQUEST, "PATCH");
+  /** set patch fields */
+  curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDS, data.c_str());
+  curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDSIZE, data.size());
 
   return this->performCurlRequest(url);
 }
